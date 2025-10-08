@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  app:
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # localhost-port:container-port
+    # env_file:
+    #   - ./.env
+    environment:
+      - DATABASE_HOSTNAME=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_PASSWORD=Aa.40961907
+      - DATABASE_NAME=fastapi
+      - DATABASE_USERNAME=postgres
+      - SECRET_KEY=81086860f48818d58cc6369322530b5c6b9366613189445c98db5dd76192a99e
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=60
+  postgres:
+    image: postgres:15
+    ports:
+      - "5332:5432"
+    environment:
+      - POSTGRES_PASSWORD=Aa.40961907
+      - POSTGRES_DB=fastapi
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
